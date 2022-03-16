@@ -37,22 +37,23 @@ for i in soup6.find_all("a", href=True, class_="buybox--button"):
     urls.append(i['href'])
 
 
-#Scrape productpage
-productURL=[]
+
+productUrl=[]
 productTitle=[]
 productInhaltsstoffe=[]
+#Scrape productpage for Title, URLs 
 for i in urls:
     productPage = i
     openProductPage=urlopen(productPage)
     productSoup=BeautifulSoup(openProductPage, 'html.parser')
-    productTitle.append(productSoup.find('h1', {'class' : 'product-name'}))
-    productURL.append(i)
+    productTitle.append(productSoup.find('h1', {'class' : 'product--title'}))
+    #productURL.append(i)
     #productInhaltsstoffe.append()
-    
 
 for i in productTitle:    
-    print(i)
-for i in productURL:    
+    print(i.text.strip()) #strip text between elements
+
+for i in urls:    
     print(i)    
 
     
