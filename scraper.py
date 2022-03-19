@@ -68,32 +68,11 @@ def scrapeStayfocusedDotDeProducts():
 
 scrapeStayfocusedDotDeProducts()
 
-for i in productName:    
-    finishedProductName.append(i.text) #strips html text between elements
-
-for i in categoryPageUrls:    
-    print(i)    
-
-for i in productPrice:
-    finishedProductPrice.append(i.text) 
-
-for i in productDescription:
-    finishedProductDescription.append(i.text) 
-
-for i in productContents:
-    finishedProductContents.append(i.text)
-    
-for i in productPictureUrl:
-    finishedProductPictureUrl.append(((i['data-img-small']),(i['data-img-large']))) #strips image from html tag
-
-
-
 
 
 dfArray = {"productName" : finishedProductName, "productPrice" : finishedProductPrice, "productDescription" : finishedProductDescription, "name5" : finishedProductPictureUrl, "productContents" : finishedProductContents}
 df = pd.DataFrame.from_dict(dfArray, orient='index')
-df.transpose()
-df.to_csv("submission3.csv",index=True,header=True, encoding='utf-8')
+df.to_csv("submission4.csv",index=True,header=True, encoding='utf-8')
 
 
 
