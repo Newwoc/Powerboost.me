@@ -1,7 +1,11 @@
 from posixpath import split
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
-import mysql.connector
+import numpy as np
+import pandas as pd 
+
+
+
 
 #define arrays
 productUrl=[]
@@ -11,16 +15,11 @@ productDescription=[]
 productContents=[]
 productPictureUrl=[]
 categoryPageUrls=[]
-
-
-#connect to Database
-#connection = database.connect(
-#user=username,
-#password=password,
-#host=localhost,
-#database="workplace")
-#set curser to retrieve and update data one row at a time
-#cursor = connection.cursor()
+finishedProductPictureUrl=[]
+finishedProductContents=[]
+finishedProductDescription=[]
+finishedProductPrice=[]    
+finishedProductName=[]
 
 #Scrape 'trainingsbooster' Category pages and saves every article URL in array
 def getStayfocusedDotDeProductUrls():
@@ -70,23 +69,31 @@ def scrapeStayfocusedDotDeProducts():
 scrapeStayfocusedDotDeProducts()
 
 for i in productName:    
-    print(i.text) #strips html text between elements and prints product title
+    finishedProductName.append(i.text) #strips html text between elements
 
 for i in categoryPageUrls:    
     print(i)    
 
 for i in productPrice:
-    print(i.text) 
+    finishedProductPrice.append(i.text) 
 
 for i in productDescription:
-    print(i.text) 
+    finishedProductDescription.append(i.text) 
 
 for i in productContents:
-    print(i.text)
+    finishedProductContents.append(i.text)
     
 for i in productPictureUrl:
-    print((i['data-img-small']),(i['data-img-large'])) #strips image from html tag
-          
+    finishedProductPictureUrl.append(((i['data-img-small']),(i['data-img-large']))) #strips image from html tag
+
+
+
+
+
+dfArray = {"productName" : finishedProductName, "productPrice" : finishedProductPrice, "productDescription" : finishedProductDescription, "name5" : finishedProductPictureUrl, "productContents" : finishedProductContents}
+df = pd.DataFrame.from_dict(dfArray, orient='index')
+df.transpose()
+df.to_csv("submission3.csv",index=True,header=True, encoding='utf-8')
 
 
 
